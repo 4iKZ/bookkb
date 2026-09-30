@@ -1,6 +1,7 @@
 # bookkb — personal book knowledge base
 
-This workspace hosts a local, source-grounded knowledge base CLI: `bookkb.py`.
+This workspace hosts a local, source-grounded knowledge base CLI: `bookkb`
+(`src/bookkb` package; entry points `bookkb` console script or `python -m bookkb`).
 
 ## Answering knowledge questions
 
@@ -8,7 +9,7 @@ When the user asks a question answerable from the books/notes in this knowledge
 base, retrieve evidence with the CLI BEFORE answering:
 
 ```bash
-python3 /home/hatch/workspace/bookkb/bookkb.py ask "<question>" -k 5
+cd /home/hatch/workspace/bookkb && PYTHONPATH=src python3 -m bookkb ask "<question>" -k 5
 ```
 
 - Coverage: 《纳瓦尔宝典》(Naval Ravikant, English), 《巴比伦最富有的人》
