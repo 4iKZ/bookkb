@@ -2,3 +2,7 @@ data/
 .implement-result.json
 .review-result.json
 __pycache__/
+*.egg-info/
+build/
+dist/
+.pytest_cache/

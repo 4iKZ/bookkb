@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bookkb"
+version = "0.1.0"
+description = "Personal book knowledge-base CLI: ingest PDFs & markdown, ask for evidence."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pypdf", "onnxruntime", "tokenizers"]
+
+[project.scripts]
+bookkb = "bookkb.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

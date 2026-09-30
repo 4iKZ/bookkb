@@ -16,6 +16,7 @@ CLI 只做检索，不做 LLM 合成——把证据喂给任何大模型（或 a
 
 ```bash
 pip install --user onnxruntime tokenizers numpy pypdf
+pip install --user -e .          # 安装 bookkb 包 + console script
 ```
 
 再准备 embedding 模型（`intfloat/multilingual-e5-small` 的 ONNX 版），目录结构：
@@ -36,14 +37,17 @@ pip install --user onnxruntime tokenizers numpy pypdf
 
 ```bash
 # 1. 入库：PDF 文件/目录，或含 book/ + docs/ 的 markdown 仓库目录
-python3 bookkb.py ingest ~/books/纳瓦尔宝典.pdf
-python3 bookkb.py ingest ~/books/pdfs/
-python3 bookkb.py ingest ~/notes-repo/      # 需含 book/*.md（正文）与 docs/*.md（可选）
+bookkb ingest ~/books/纳瓦尔宝典.pdf
+bookkb ingest ~/books/pdfs/
+bookkb ingest ~/notes-repo/      # 需含 book/*.md（正文）与 docs/*.md（可选）
 
 # 2. 提问：返回 top-k 证据（默认 8 条）
-python3 bookkb.py ask "What does Naval say about leverage?" -k 5
-python3 bookkb.py ask "失业了能领什么补助" -k 3
+bookkb ask "What does Naval say about leverage?" -k 5
+bookkb ask "失业了能领什么补助" -k 3
 ```
+
+等效命令：`python3 -m bookkb ingest ...` / `python3 -m bookkb ask ...`。
+旧版 `python3 bookkb.py ...` 已不再可用（单文件已移除，改用包结构）。
 
 输出示例：
 
@@ -86,11 +90,25 @@ ask:     问题同样编码 → NumPy 暴力算 cosine 相似度 → 返回 top-
 ## 项目文件
 
 ```
-bookkb.py    单文件 CLI（ingest / ask）
-SPEC.md      v1 需求规格（中文）
-AGENTS.md    给 agent 看的知识库使用说明
-data/        本地数据（gitignored）：SQLite 库、入库的源文件、模型无关
+src/bookkb/     包源码
+  __main__.py     python -m bookkb 入口
+  cli.py          子命令装配（ingest / ask）
+  ingest.py       文档发现 + 切块（PDF / markdown）
+  embed.py        ONNX embedding（可注入测试 seam）
+  store.py        SQLite 读写
+  retrieve.py     检索 + 引用格式化
+tests/          单测（切块、store 读写、检索排序）— 不依赖模型
+docs/SPEC.md    v1 需求规格（中文）
+AGENTS.md       给 agent 看的知识库使用说明（留在根目录）
+data/           本地数据（gitignored）：SQLite 库
 ```
+
+### 从旧版迁移
+
+- 旧：`python3 bookkb.py ingest ...` → 新：`bookkb ingest ...`（或 `python3 -m bookkb ingest ...`）
+- 旧：`python3 bookkb.py ask ...` → 新：`bookkb ask ...`（或 `python3 -m bookkb ask ...`）
+- 数据库默认位置从脚本旁 `data/bookkb.sqlite` 改为当前工作目录下 `data/bookkb.sqlite`；
+  仍可用 `BOOKKB_DB` 环境变量覆盖。
 
 ## License
 
