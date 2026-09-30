@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-![bookkb](docs/assets/hero.webp)
+![bookkb](docs/assets/hero-comic.webp)
 
 Turn your PDF ebooks and Markdown notes into a **local, citable** knowledge base:
 `ingest` to load → `ask` to query, getting back source passages with **precise
@@ -70,7 +70,7 @@ Database location: `data/bookkb.sqlite` (under the project root), overridable vi
 
 ## How it works
 
-![How it works](docs/assets/how-it-works.webp)
+![How it works](docs/assets/how-it-works-comic.webp)
 
 ```
 ingest:  PDFs split by page / Markdown split by h2 → chunked → e5-small embeddings

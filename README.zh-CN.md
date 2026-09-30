@@ -2,7 +2,7 @@
 
 [English](README.md) | 简体中文
 
-![bookkb](docs/assets/hero.webp)
+![bookkb](docs/assets/hero-comic.webp)
 
 把你的 PDF 电子书和 Markdown 笔记变成一个**本地、可引用**的知识库：
 `ingest` 入库 → `ask` 提问，返回带**精确出处**（书名+页码 / 文件+章节）的原文证据。
@@ -68,7 +68,7 @@ and products with no marginal cost of replication (code and media)."
 
 ## 工作原理
 
-![工作原理](docs/assets/how-it-works.webp)
+![工作原理](docs/assets/how-it-works-comic.webp)
 
 ```
 ingest:  PDF按页 / Markdown按二级标题 → 切 chunk → e5-small embedding
