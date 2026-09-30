@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-![bookkb](docs/assets/hero-comic.webp)
+![bookkb](docs/assets/hero-banner.webp)
 
 Turn your PDF ebooks and Markdown notes into a **local, citable** knowledge base:
 `ingest` to load → `ask` to query, getting back source passages with **precise
