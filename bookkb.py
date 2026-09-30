@@ -35,11 +35,16 @@ def _model_dir() -> Path:
     override = os.environ.get("BOOKKB_MODEL_DIR")
     if override:  # dir containing tokenizer.json + onnx/model.onnx
         return Path(override)
-    base = Path("/home/hatch/.hf-models/models--intfloat--multilingual-e5-small/snapshots")
-    snaps = sorted(base.glob("*/onnx"))
-    if not snaps:
-        raise RuntimeError("e5-small ONNX snapshot not found under " + str(base))
-    return snaps[0].parent  # snapshot dir (tokenizer.json + onnx/)
+    roots = [
+        os.environ.get("HF_HOME"),
+        str(Path.home() / ".cache" / "huggingface"),
+        "/home/hatch/.hf-models",  # legacy local path
+    ]
+    for root in filter(None, roots):
+        snaps = sorted(Path(root, "models--intfloat--multilingual-e5-small", "snapshots").glob("*/onnx"))
+        if snaps:
+            return snaps[0].parent  # snapshot dir (tokenizer.json + onnx/)
+    raise RuntimeError("e5-small ONNX snapshot not found; set BOOKKB_MODEL_DIR or HF_HOME")
 
 
 # --- embedding (lazy-loaded so ingest/ask share one session) ----------
